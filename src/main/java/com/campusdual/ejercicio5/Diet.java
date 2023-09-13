@@ -11,6 +11,8 @@ public class Diet {
     public static final String MAX_FATS_REBASE = "MAX_FATS_REBASE";
     public static final String MAX_PROTEINS_REBASE = "MAX_PROTEINS_REBASE";
 
+
+
     private Integer maxCalories;
     private Integer maxCarbs;
     private Integer maxFats;
@@ -21,7 +23,7 @@ public class Diet {
         this.intakes = new ArrayList<>();
     }
 
-    public Diet(Integer maxCalories){
+    public Diet( Integer maxCalories){
         this.maxCalories=maxCalories;
         this.intakes = new ArrayList<>();
     }
@@ -159,6 +161,7 @@ public class Diet {
     public void setIntakes(List<Intake> intakes) {
         this.intakes = intakes;
     }
+
 
     public String getDietIntakes(){
         String result = "";
