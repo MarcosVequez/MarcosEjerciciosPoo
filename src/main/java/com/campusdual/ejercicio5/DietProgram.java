@@ -13,11 +13,13 @@ public class DietProgram {
     public static final String MAXCARBS = "maxcarbs";
     public static final String MAXFATS = "maxfats";
     public static final String MAXPROTEINS = "maxproteins";
-    private Diet diet=null;
+
 
     private Map<String,Diet> dietList;
 
     private List<Food> foodList;
+
+    private List<Patient> patientList;
 
     public DietProgram(){
         foodList = new ArrayList<>();
@@ -53,11 +55,36 @@ public class DietProgram {
     }
 
     private void patientManager() {
+        System.out.println("########################################################");
+        System.out.println("############### Gestión de pacientes ###################");
+        System.out.println("########################################################");
+    //TODO falta completar el menú de gestión de pacientes
     }
+    private Patient getSelectedPatient(){
+        if(patientList.isEmpty()){                                 //si no hay pacientes ,muestra el mensaje y sale
+            System.out.println("No existen pacientes");
+            return null;
+        }
+        System.out.println("Escoja un paciente de la lista:");
 
+        Integer i = 1;
+        for(Patient patient:patientList){
+            System.out.println(i+"- "+patient.getName());
+            i++;
+        }
+        System.out.println(i+"- Salir");
+        Integer element = Kb.getOption(1,i);
+        if(element==i){
+            System.out.println("Cancelando alimento");
+            return null;
+        }else{
+            return patientList.get(i);
+        }
+
+    }
     private void dietManager() {
         System.out.println("########################################################");
-        System.out.println("################# Gestión de Dietas ###################");
+        System.out.println("################# Gestión de Dietas ####################");
         System.out.println("########################################################");
         Integer option;
         do{
@@ -146,8 +173,8 @@ public class DietProgram {
             System.out.println("Operación cancelada");  // si no seleccionamos una dieta muestra mensaje
         }else{
             Diet deleted = dietList.remove(selected);  // borra la dieta del Map con la key que le pasamos del método getSelectedDiet()
-
-            if(deleted!=null){
+            System.out.println("Dieta eliminada");
+            if(deleted==null){
                 System.out.println("No se encontró la dieta a eliminar");
             }
         }
@@ -155,7 +182,7 @@ public class DietProgram {
 
     // método que devuelve la key de una dieta
     private String getSelectedDiet(){
-        if(dietList.isEmpty()){
+        if(dietList.isEmpty()){                                 //si no hay dietas ,muestra el mensaje y sale
             System.out.println("No existen dietas creadas");
             return null;
         }
@@ -168,9 +195,9 @@ public class DietProgram {
             i++;
         }
 
-        System.out.println((i+1)+"-Salir");
-        Integer selected = Kb.getOption(1,i+1);
-        if(selected == i+1){
+        System.out.println((i)+"-Salir");
+        Integer selected = Kb.getOption(1,i);
+        if(selected == i){
             return null;
         }
         return dietOptions.get(selected-1); // devuelve la key de la dieta escogida
@@ -313,8 +340,9 @@ public class DietProgram {
                 Integer age = Kb.forceNextInt();
                 System.out.println("Mujer u Hombre(m/h):");
                 String sexCharacter = Kb.nextLine();
-                dietList.put(dietName,new Diet("m".equalsIgnoreCase(sexCharacter),age,height,weight));
-                System.out.println("Se ha creado una dieta de "+this.diet.getMaxCalories()+" calorías máximas");
+                Diet newDiet = new Diet("m".equalsIgnoreCase(sexCharacter),age,height,weight);
+                dietList.put(dietName, newDiet);
+                System.out.println("Se ha creado una dieta de "+newDiet.getMaxCalories()+" calorías máximas");
                 break;
         }
     }
